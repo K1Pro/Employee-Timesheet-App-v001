@@ -1,4 +1,5 @@
 <!-- Calendar Header -->
+
 <div
   id="calendarHeader"
   class="row calendarHeaderRow bg-secondary responsiveHeaderFont"
@@ -12,7 +13,12 @@
     <img src="images/BackwardWhite.png" alt="Last-Week" />
   </div>
   <div id="CalendarDate" class="col-6 text-center text-light font-weight-bold">
-    Date
+    <?php 
+      $date = $_GET["date"];
+      if($date == ""){
+        echo date("Y-m-d");   
+      } else { echo $date; }
+    ?>
   </div>
   <div id="NextWeekButton" class="col-1 text-end">
     <img src="images/ForwardWhite.png" alt="Next-Week" />
@@ -26,24 +32,27 @@
 <!-- Calendar Dates -->
 <?php
 $dayOfTheWeek = 1;
-$calendarDay = 1;
+$calendarDay = 0;
 do {
+    $calendarDate=strtotime("-1 week last monday + $calendarDay day");
     if ($dayOfTheWeek == 1) {
       echo '<div class="row calendarRow">';
     }
     if ($dayOfTheWeek == 6) {
       echo '<div class="col">';
       echo '<div class="row calendarSatSunRow">';
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.$calendarDay.'</div></div>';
+      echo('<a href="?date='.date("Y-m-d", $calendarDate).'">');
+      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div></a></div>';
     } else if ($dayOfTheWeek == 7) {
       echo '<div class="row calendarSatSunRow">';
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.$calendarDay.'</div></div></div></div>';
+      echo('<a href="?date='.date("Y-m-d", $calendarDate).'">');
+      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div></a></div></div></div>';
       $dayOfTheWeek = 0;
     } else {
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.$calendarDay.'</div>';
+      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div>';
     }
     $dayOfTheWeek++;
     $calendarDay++;
-} while ($calendarDay < 29);
+} while ($calendarDay < 28);
 ?>
 <div id="CalendarHTMLModule"></div>
