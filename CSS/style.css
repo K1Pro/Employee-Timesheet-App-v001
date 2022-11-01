@@ -40,3 +40,7 @@
 #calendarHeader img {
   height: 2.75vh;
 }
+
+a {
+  text-decoration: none;
+}

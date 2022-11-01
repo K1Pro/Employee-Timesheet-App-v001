@@ -16,6 +16,7 @@
     <?php 
       $date = $_GET["date"];
       if($date == ""){
+        $date = date("Y-m-d");
         echo date("Y-m-d");   
       } else { echo $date; }
     ?>
@@ -41,15 +42,22 @@ do {
     if ($dayOfTheWeek == 6) {
       echo '<div class="col">';
       echo '<div class="row calendarSatSunRow">';
-      echo('<a href="?date='.date("Y-m-d", $calendarDate).'">');
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div></a></div>';
+      echo('<a class="col border border-secondary day-hover responsiveFont');
+        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
+      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div>';
     } else if ($dayOfTheWeek == 7) {
       echo '<div class="row calendarSatSunRow">';
-      echo('<a href="?date='.date("Y-m-d", $calendarDate).'">');
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div></a></div></div></div>';
+      echo('<a class="col border border-secondary day-hover responsiveFont');
+        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
+      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div></div></div>';
       $dayOfTheWeek = 0;
     } else {
-      echo '<div id="day'.$calendarDay.'" class="col border border-secondary day-hover responsiveFont">'.date("m-d", $calendarDate).'</div>';
+      echo('<a class="col border border-secondary day-hover responsiveFont');
+        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
+      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>';
     }
     $dayOfTheWeek++;
     $calendarDay++;
