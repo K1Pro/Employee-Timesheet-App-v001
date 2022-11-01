@@ -1,0 +1,42 @@
+.bartkaEmptyCol {
+  height: 0vh;
+}
+.calendarRow {
+  height: 15vh;
+}
+.calendarSatSunRow {
+  height: 7.5vh;
+}
+.day-hover:hover {
+  background-color: #ccffff;
+}
+.calendarCurrentDay {
+  background-color: #ccffcc;
+}
+
+.responsiveFont {
+  font-size: 2vh;
+}
+.responsiveHeaderFont {
+  font-size: 3vh;
+}
+* {
+  border-radius: 0 !important;
+}
+.form-control::-moz-placeholder {
+  color: red;
+  opacity: 0.6;
+}
+.form-control::placeholder {
+  color: red;
+  opacity: 0.6;
+}
+#LastMonthButton:hover,
+#LastWeekButton:hover,
+#NextWeekButton:hover,
+#NextMonthButton:hover {
+  cursor: pointer;
+}
+#calendarHeader img {
+  height: 2.75vh;
+}
