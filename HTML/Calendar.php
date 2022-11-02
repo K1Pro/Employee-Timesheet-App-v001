@@ -32,6 +32,15 @@
 
 <!-- Calendar Dates -->
 <?php
+
+$directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
+// echo $directory;
+$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+print_r($scanned_directory);
+foreach( $scanned_directory as $bartkadirectory ) {
+  echo substr($bartkadirectory, , ) . '<br>';
+}
+
 $dayOfTheWeek = 1;
 $calendarDay = 0;
 do {
@@ -39,6 +48,7 @@ do {
     if ($dayOfTheWeek == 1) {
       echo '<div class="row calendarRow">';
     }
+// Saturday
     if ($dayOfTheWeek == 6) {
       echo '<div class="col">';
       echo '<div class="row calendarSatSunRow">';
@@ -46,6 +56,7 @@ do {
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
       echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
       echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div>';
+// Sunday
     } else if ($dayOfTheWeek == 7) {
       echo '<div class="row calendarSatSunRow">';
       echo('<a class="col border border-secondary day-hover responsiveFont');
@@ -53,6 +64,7 @@ do {
       echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
       echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div></div></div>';
       $dayOfTheWeek = 0;
+// Monday-Friday
     } else {
       echo('<a class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
