@@ -4,6 +4,10 @@ $nodeList = [
   "node1" => "Bartosz_-Poland-Desktop-01",
   "node2" => "Bartosz_-Poland-Desktop-02",
   "node3" => "Hanna___-Office-Desktop-01",
+  "node4" => "Bartosz_-Office-Desktop-01",
+  "node5" => "Hanna___-Office-Desktop-02",
+  "node6" => "Bartosz_-Office-Desktop-02",
+  "node7" => "Staff___-Office-Desktop-02",
 ];
 ?>
 
@@ -48,8 +52,12 @@ function listNodeActivity($date, $nodeList, $directory) {
     $scannedNode = substr($logFiles, 0, 26);
     if (in_array($scannedNode, $nodeList) && !in_array($scannedNode, $uniqueNodeList)) {
       if ($OSAction == "Unlocked") {
+        
           $timeOfScannedNode = substr($logFiles, 27, 5);
-          echo '<div class="nodeActivity">' . str_replace("_", ":", $timeOfScannedNode) . ' ';
+          echo '<div class="text-light border-bottom border-white nodeActivity ';
+          if (substr($scannedNode, 0, 8) == "Bartosz_") {echo 'BartoszTime';}
+          if (substr($scannedNode, 0, 8) == "Hanna___") {echo 'HannaTime';}
+          echo '">' . str_replace("_", ":", $timeOfScannedNode) . ' ';
           echo str_replace("_", "", $scannedNode) . '</div>' . "\n";
           if(!in_array($scannedNode, $uniqueNodeList , true)){
             array_push($uniqueNodeList , $scannedNode);
@@ -61,6 +69,7 @@ function listNodeActivity($date, $nodeList, $directory) {
 // $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
 // listNodeActivity($date, $nodeList, $directory);
 
+
 $dayOfTheWeek = 1;
 $calendarDay = 0;
 do {
@@ -71,6 +80,8 @@ do {
 // Saturday
     if ($dayOfTheWeek == 6) {
       echo "\t" .'<div class="col">' . "\n";
+
+
       echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
       echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
@@ -79,6 +90,8 @@ do {
 // Sunday
     } else if ($dayOfTheWeek == 7) {
       echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
+
+
       echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
       echo '" href="?date='.date("Y-m-d", $calendarDate).'">' . "\n";

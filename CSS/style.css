@@ -46,5 +46,16 @@ a {
 }
 
 .nodeActivity {
-  font-size: 2vh;
+  margin-left: -12px;
+  padding-left: 12px;
+  margin-right: -12px;
+  padding-right: 12px;
+  font-size: 1.75vh;
+}
+
+.BartoszTime {
+  background-color: lightseagreen;
+}
+.HannaTime {
+  background-color: lightcoral;
 }
