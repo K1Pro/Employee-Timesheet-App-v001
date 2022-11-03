@@ -40,61 +40,60 @@ $nodeList = [
 
 <!-- Calendar Dates -->
 <?php
-
-$directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
-// echo $directory;
-$scanned_directory = array_diff(scandir($directory), array('..', '.'));
-// print_r($scanned_directory);
-// print_r($nodeList);
-foreach( $scanned_directory as $logFiles ) {
-  $OSAction = substr($logFiles, -12, 8);
-
-  // echo $scannedNode . '<br>';
-  if ($OSAction == "Unlocked") {
-    foreach ($nodeList as $node) {
-      // echo $node . '<br>';
-      $scannedNode = substr($logFiles, 0, 26);
-      if ($node == $scannedNode) {
-        $timeOfScannedNode = substr($logFiles, 27, 5);
-        echo str_replace("_", ":", $timeOfScannedNode) . ' ';
-        echo str_replace("_", "", $scannedNode) . '<br>';
+function listNodeActivity($date, $nodeList, $directory) {
+  $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+  $uniqueNodeList =[];
+  foreach( $scanned_directory as $logFiles ) {
+    $OSAction = substr($logFiles, -12, 8);
+    $scannedNode = substr($logFiles, 0, 26);
+    if (in_array($scannedNode, $nodeList) && !in_array($scannedNode, $uniqueNodeList)) {
+      if ($OSAction == "Unlocked") {
+          $timeOfScannedNode = substr($logFiles, 27, 5);
+          echo '<div class="nodeActivity">' . str_replace("_", ":", $timeOfScannedNode) . ' ';
+          echo str_replace("_", "", $scannedNode) . '</div>' . "\n";
+          if(!in_array($scannedNode, $uniqueNodeList , true)){
+            array_push($uniqueNodeList , $scannedNode);
+        }
+        }
       }
-    }
-
-    // echo $logFiles . '<br>';
   }
-  // echo substr($logFiles, -12, 8) . '<br>';
 }
+// $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
+// listNodeActivity($date, $nodeList, $directory);
 
 $dayOfTheWeek = 1;
 $calendarDay = 0;
 do {
-    $calendarDate=strtotime("-1 week last monday + $calendarDay day");
+    $calendarDate=strtotime("-3 week last monday + $calendarDay day");
     if ($dayOfTheWeek == 1) {
-      echo '<div class="row calendarRow">';
+      echo '<div class="row calendarRow">' . "\n";
     }
 // Saturday
     if ($dayOfTheWeek == 6) {
-      echo '<div class="col">';
-      echo '<div class="row calendarSatSunRow">';
-      echo('<a class="col border border-secondary day-hover responsiveFont');
+      echo "\t" .'<div class="col">' . "\n";
+      echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
+      echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div>';
+      echo '" href="?date='.date("Y-m-d", $calendarDate).'">' . "\n";
+      echo "\t" . "\t" . "\t" . "\t" . '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div>' . "\n";
 // Sunday
     } else if ($dayOfTheWeek == 7) {
-      echo '<div class="row calendarSatSunRow">';
-      echo('<a class="col border border-secondary day-hover responsiveFont');
+      echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
+      echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div></div></div>';
+      echo '" href="?date='.date("Y-m-d", $calendarDate).'">' . "\n";
+      echo "\t" . "\t" . "\t" . "\t" . '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div></div></div>' . "\n";
       $dayOfTheWeek = 0;
 // Monday-Friday
     } else {
-      echo('<a class="col border border-secondary day-hover responsiveFont');
-        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '" href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>';
+      echo("\t" . '<div style="overflow-y: scroll" class="calendarRow col border border-secondary day-hover responsiveFont');
+      if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
+      echo '">';
+      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
+      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
+      listNodeActivity($date, $nodeList, $directory);
+      echo '</div>' . "\n";
     }
     $dayOfTheWeek++;
     $calendarDay++;

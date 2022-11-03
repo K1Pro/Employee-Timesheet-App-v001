@@ -44,3 +44,7 @@
 a {
   text-decoration: none;
 }
+
+.nodeActivity {
+  font-size: 2vh;
+}
