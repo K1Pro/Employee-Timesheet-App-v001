@@ -1,9 +1,9 @@
 <?php
 $nodeList = [
   // String Length has to equal 26
-  "node1" => "Bartosz__Poland-Desktop-01",
-  "node2" => "Bartosz__Poland-Desktop-02",
-  "node3" => "Hanna____Office-Desktop-01",
+  "node1" => "Bartosz_-Poland-Desktop-01",
+  "node2" => "Bartosz_-Poland-Desktop-02",
+  "node3" => "Hanna___-Office-Desktop-01",
 ];
 ?>
 
@@ -48,14 +48,16 @@ $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 // print_r($nodeList);
 foreach( $scanned_directory as $logFiles ) {
   $OSAction = substr($logFiles, -12, 8);
-  $scannedNode = substr($logFiles, 0, 26);
+
   // echo $scannedNode . '<br>';
   if ($OSAction == "Unlocked") {
     foreach ($nodeList as $node) {
       // echo $node . '<br>';
+      $scannedNode = substr($logFiles, 0, 26);
       if ($node == $scannedNode) {
-        echo $logFiles . '<br>';
-        echo "everything is ok<br>";
+        $timeOfScannedNode = substr($logFiles, 27, 5);
+        echo str_replace("_", ":", $timeOfScannedNode) . ' ';
+        echo str_replace("_", "", $scannedNode) . '<br>';
       }
     }
 
