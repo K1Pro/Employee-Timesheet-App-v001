@@ -55,8 +55,8 @@ function listNodeActivity($date, $nodeList, $directory) {
         
           $timeOfScannedNode = substr($logFiles, 27, 5);
           echo '<div class="text-light border-bottom border-white nodeActivity ';
-          if (substr($scannedNode, 0, 8) == "Bartosz_") {echo 'BartoszTime';}
-          if (substr($scannedNode, 0, 8) == "Hanna___") {echo 'HannaTime';}
+            if (substr($scannedNode, 0, 8) == "Bartosz_") {echo 'BartoszTime';}
+            if (substr($scannedNode, 0, 8) == "Hanna___") {echo 'HannaTime';}
           echo '">' . str_replace("_", ":", $timeOfScannedNode) . ' ';
           echo str_replace("_", "", $scannedNode) . '</div>' . "\n";
           if(!in_array($scannedNode, $uniqueNodeList , true)){
@@ -80,22 +80,26 @@ do {
 // Saturday
     if ($dayOfTheWeek == 6) {
       echo "\t" .'<div class="col">' . "\n";
-
-
-      echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
-      echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
+      echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
+      echo("\t" . '<div style="overflow-y: scroll" class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '" href="?date='.date("Y-m-d", $calendarDate).'">' . "\n";
-      echo "\t" . "\t" . "\t" . "\t" . '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div>' . "\n";
+      echo '">';
+      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
+      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
+      listNodeActivity($date, $nodeList, $directory);
+      echo '</div></div>' . "\n";
 // Sunday
     } else if ($dayOfTheWeek == 7) {
-      echo "\t" . "\t" . '<div class="row calendarSatSunRow">' . "\n";
-
-
-      echo("\t" . "\t" . "\t" . '<a class="col border border-secondary day-hover responsiveFont');
+      echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
+      echo("\t" . '<div style="overflow-y: scroll" class="col border border-secondary day-hover responsiveFont');
         if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '" href="?date='.date("Y-m-d", $calendarDate).'">' . "\n";
-      echo "\t" . "\t" . "\t" . "\t" . '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a></div></div></div>' . "\n";
+      echo '">';
+      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
+      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
+      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
+      listNodeActivity($date, $nodeList, $directory);
+      echo '</div></div></div></div>' . "\n";
       $dayOfTheWeek = 0;
 // Monday-Friday
     } else {
