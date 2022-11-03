@@ -1,5 +1,6 @@
 <?php
 $nodeList = [
+  // String Length has to equal 26
   "node1" => "Bartosz__Poland-Desktop-01",
   "node2" => "Bartosz__Poland-Desktop-02",
   "node3" => "Hanna____Office-Desktop-01",
@@ -45,12 +46,22 @@ $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($dat
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 // print_r($scanned_directory);
 // print_r($nodeList);
-foreach( $scanned_directory as $bartkadirectory ) {
-  $action = substr($bartkadirectory, -12, 8);
-  if ($action == "Unlocked") {
-    echo $bartkadirectory . '<br>';
+foreach( $scanned_directory as $logFiles ) {
+  $OSAction = substr($logFiles, -12, 8);
+  $scannedNode = substr($logFiles, 0, 26);
+  // echo $scannedNode . '<br>';
+  if ($OSAction == "Unlocked") {
+    foreach ($nodeList as $node) {
+      // echo $node . '<br>';
+      if ($node == $scannedNode) {
+        echo $logFiles . '<br>';
+        echo "everything is ok<br>";
+      }
+    }
+
+    // echo $logFiles . '<br>';
   }
-  // echo substr($bartkadirectory, -12, 8) . '<br>';
+  // echo substr($logFiles, -12, 8) . '<br>';
 }
 
 $dayOfTheWeek = 1;
