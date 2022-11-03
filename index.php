@@ -30,12 +30,12 @@
 
         <!-- Calendar Section -->
         <div class="col-12 col-md-9 bg-light" style="--bs-bg-opacity: 0.25">
-          <?php include './HTML/Calendar.php';?>
+          <?php include './PHP/Calendar.php';?>
         </div>
 
         <!-- Side Panel Section -->
         <div class="col-12 col-md-3 bg-dark text-light " style="padding: 10px; --bs-bg-opacity: 0.65">
-          <?php include './HTML/SidePanel.php';?>
+          <?php include './PHP/SidePanel.php';?>
         </div>
       </div>
 
