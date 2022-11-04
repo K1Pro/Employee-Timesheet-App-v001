@@ -53,7 +53,7 @@ function listNodeActivity($date, $calendarDate, $nodeList) {
     $OSAction = substr($logFiles, -12, 8);
     $scannedNode = substr($logFiles, 0, 26);
     if (in_array($scannedNode, $nodeList) && !in_array($scannedNode, $uniqueNodeList)) {
-      if ($OSAction == "Unlocked") {
+      if ($OSAction == "Logon_at") {
           $timeOfScannedNode = substr($logFiles, 27, 5);
           echo '<div class="text-light border-bottom border-white nodeActivity ';
             if (substr($scannedNode, 0, 8) == "Bartosz_") {echo 'BartoszTime';}
@@ -70,7 +70,7 @@ function listNodeActivity($date, $calendarDate, $nodeList) {
 // $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
 // listNodeActivity($date, $nodeList, $directory);
 
-function listDateHeaders($date, $calendarDate) {
+function listDateHeaders($date, $calendarDay, $calendarDate) {
     if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
     // echo date("Y-m-d", $calendarDate);
   echo '">';
@@ -91,21 +91,21 @@ function populateCalendar($date, $nodeList, $weeks){
         echo "\t" .'<div class="col">' . "\n";
         echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
         echo("\t" . '<div style="overflow-y: scroll" class="calendarSatSunRow col border border-secondary day-hover responsiveFont');
-        listDateHeaders($date, $calendarDate);
+        listDateHeaders($date, $calendarDay, $calendarDate);
         listNodeActivity($date, $calendarDate, $nodeList);
         echo '</div></div>' . "\n";
   // Sunday
       } else if ($dayOfTheWeek == 7) {
         echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
         echo("\t" . '<div style="overflow-y: scroll" class="calendarSatSunRow col border border-secondary day-hover responsiveFont');
-        listDateHeaders($date, $calendarDate);
+        listDateHeaders($date, $calendarDay, $calendarDate);
         listNodeActivity($date, $calendarDate, $nodeList);
         echo '</div></div></div></div>' . "\n";
         $dayOfTheWeek = 0;
   // Monday-Friday
       } else {
         echo("\t" . '<div style="overflow-y: scroll" class="calendarRow col border border-secondary day-hover responsiveFont');
-        listDateHeaders($date, $calendarDate);
+        listDateHeaders($date, $calendarDay, $calendarDate);
         listNodeActivity($date, $calendarDate, $nodeList);
         echo '</div>' . "\n";
       }
