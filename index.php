@@ -25,6 +25,7 @@
     <title>Bundle Employee Timesheet</title>
   </head>
   <body>
+  <?php include './PHP/functions.php';?>
     <div class="container-fluid">
       <div class="row">
 
