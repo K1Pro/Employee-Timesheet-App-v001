@@ -31,12 +31,12 @@
   color: red;
   opacity: 0.6;
 }
-#LastMonthButton:hover,
+/* #LastMonthButton:hover,
 #LastWeekButton:hover,
 #NextWeekButton:hover,
 #NextMonthButton:hover {
   cursor: pointer;
-}
+} */
 #calendarHeader img {
   height: 2.75vh;
 }

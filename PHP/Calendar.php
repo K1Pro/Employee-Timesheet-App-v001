@@ -1,4 +1,9 @@
 <?php
+$date = $_GET["date"];
+if($date == ""){
+  $date = date("Y-m-d");
+} 
+
 $nodeList = [
   // String Length has to equal 26
   "node1" => "Bartosz_-Poland-Desktop-01",
@@ -22,15 +27,15 @@ $nodeList = [
   </div>
   <div class="col-1"></div>
   <div id="LastWeekButton" class="col-1">
-    <img src="images/BackwardWhite.png" alt="Last-Week" />
+    <?php
+    echo "\n" . '<a href="?date='.date("Y-m-d").'">';
+    echo '<img src="images/BackwardWhite.png" alt="Last-Week" />';
+    echo '</a>';
+    ?>
   </div>
   <div id="CalendarDate" class="col-6 text-center text-light font-weight-bold">
     <?php 
-      $date = $_GET["date"];
-      if($date == ""){
-        $date = date("Y-m-d");
-        echo date("Y-m-d");   
-      } else { echo $date; }
+      echo $date;
     ?>
   </div>
   <div id="NextWeekButton" class="col-1 text-end">
@@ -44,7 +49,8 @@ $nodeList = [
 
 <!-- Calendar Dates -->
 <?php
-function listNodeActivity($date, $nodeList, $directory) {
+function listNodeActivity($date, $calendarDate, $nodeList) {
+  $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
   $scanned_directory = array_diff(scandir($directory), array('..', '.'));
   $uniqueNodeList =[];
   foreach( $scanned_directory as $logFiles ) {
@@ -69,7 +75,14 @@ function listNodeActivity($date, $nodeList, $directory) {
 // $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
 // listNodeActivity($date, $nodeList, $directory);
 
+function listDateHeaders($date, $calendarDate) {
+    if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
+  echo '">';
+  echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
+  echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
+}
 
+function populateCalendar($date, $nodeList){
 $dayOfTheWeek = 1;
 $calendarDay = 0;
 do {
@@ -81,39 +94,29 @@ do {
     if ($dayOfTheWeek == 6) {
       echo "\t" .'<div class="col">' . "\n";
       echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
-      echo("\t" . '<div style="overflow-y: scroll" class="col border border-secondary day-hover responsiveFont');
-        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '">';
-      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
-      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
-      listNodeActivity($date, $nodeList, $directory);
+      echo("\t" . '<div style="overflow-y: scroll" class="calendarSatSunRow col border border-secondary day-hover responsiveFont');
+      listDateHeaders($date, $calendarDate);
+      listNodeActivity($date, $calendarDate, $nodeList);
       echo '</div></div>' . "\n";
 // Sunday
     } else if ($dayOfTheWeek == 7) {
       echo "\t" .'<div class="row calendarSatSunRow">' . "\n";
-      echo("\t" . '<div style="overflow-y: scroll" class="col border border-secondary day-hover responsiveFont');
-        if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '">';
-      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
-      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
-      listNodeActivity($date, $nodeList, $directory);
+      echo("\t" . '<div style="overflow-y: scroll" class="calendarSatSunRow col border border-secondary day-hover responsiveFont');
+      listDateHeaders($date, $calendarDate);
+      listNodeActivity($date, $calendarDate, $nodeList);
       echo '</div></div></div></div>' . "\n";
       $dayOfTheWeek = 0;
 // Monday-Friday
     } else {
       echo("\t" . '<div style="overflow-y: scroll" class="calendarRow col border border-secondary day-hover responsiveFont');
-      if (date("Y-m-d", $calendarDate) == $date) { echo ' calendarCurrentDay';}
-      echo '">';
-      echo "\n" . '<a href="?date='.date("Y-m-d", $calendarDate).'">';
-      echo '<div id="day'.$calendarDay.'">'.date("m-d", $calendarDate).'</div></a>' . "\n";
-      $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
-      listNodeActivity($date, $nodeList, $directory);
+      listDateHeaders($date, $calendarDate);
+      listNodeActivity($date, $calendarDate, $nodeList);
       echo '</div>' . "\n";
     }
     $dayOfTheWeek++;
     $calendarDay++;
 } while ($calendarDay < 28);
+}
+populateCalendar($date, $nodeList);
 ?>
 <div id="CalendarHTMLModule"></div>
