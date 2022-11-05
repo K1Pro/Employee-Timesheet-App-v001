@@ -1,4 +1,7 @@
 @media only screen and (min-width: 768px) {
+  .bartkaFullColumn {
+    height: 100vh;
+  }
   .bartkaFullCol {
     margin-top: -50vh;
     height: 100vh;

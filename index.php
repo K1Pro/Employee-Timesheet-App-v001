@@ -25,6 +25,7 @@
     <title>Bundle Employee Timesheet</title>
   </head>
   <body>
+  <?php include './PHP/variables.php';?>
   <?php include './PHP/functions.php';?>
     <div class="container-fluid">
       <div class="row">
@@ -35,7 +36,7 @@
         </div>
 
         <!-- Side Panel Section -->
-        <div class="col-12 col-md-3 bg-dark text-light " style="padding: 10px; --bs-bg-opacity: 0.65">
+        <div class="col-12 col-md-3 bg-dark text-light bartkaFullColumn" style="padding: 10px; --bs-bg-opacity: 0.65; overflow-y: scroll">
           <?php include './PHP/SidePanel.php';?>
         </div>
       </div>

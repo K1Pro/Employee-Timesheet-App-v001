@@ -10,6 +10,9 @@
     id="id"
     disabled
   /> -->
-
+  <?php
+  echo $date;
+    listAllNodeActivity($sidePanelDate, $nodeList);
+  ?>
 </form>
 <div id="SidePanelHTMLModule"></div>
