@@ -11,7 +11,7 @@
     disabled
   /> -->
   <?php
-  echo $date;
+  echo "Selected Date: " . $date;
     listAllNodeActivity($sidePanelDate, $nodeList);
   ?>
 </form>
