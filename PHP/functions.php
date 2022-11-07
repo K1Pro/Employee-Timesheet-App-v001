@@ -50,10 +50,12 @@ function listDateHeaders($date, $calendarDay, $calendarDate) {
 }
 
 function populateCalendar($date, $nodeList, $weeks){
+  $dayOfTheWeekNo = date('w') - 1;
   $dayOfTheWeek = 1;
   $calendarDay = 0;
   do {
-      $calendarDate=strtotime("$weeks week last monday + $calendarDay day");
+      $calendarDate=strtotime("$weeks week + $calendarDay day - $dayOfTheWeekNo day");
+      // echo $weeks . "week, " . $calendarDay . "day, ";
       if ($dayOfTheWeek == 1) {
         echo '<div class="row calendarRow">' . "\n";
       }
