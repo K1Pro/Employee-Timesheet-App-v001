@@ -50,8 +50,24 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       }
     }
     $rep = 0;
+    $arrayRep = 0;
     $idleCount = 0;
     $turnedOnCount = 0;
+    $newUniqueNodeArraysCount = count($newUniqueNodeArrays) - 1;
+    $shortNewUniqueNodeArray = [];
+    // echo $newUniqueNodeArrays[$newUniqueNodeArraysCount];
+    foreach ($newUniqueNodeArrays as $shortNewUniqueNode){
+      $shortNewUniqueNode = substr($shortNewUniqueNode, 36, 8);
+      array_push($shortNewUniqueNodeArray, $shortNewUniqueNode);
+    }
+    if(in_array("Logon_at", $shortNewUniqueNodeArray)){} else {
+      // If noone has logged onto the node this is first stated in new Array
+      $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, 26);
+      $sortedNodeLabel = str_replace("_", "", $sortedNodeLabel);
+      $sortedNodeLabel = str_replace("-", " ", $sortedNodeLabel) . ':';
+      array_push($sortedNodeArrays, $sortedNodeLabel);
+      array_push($sortedNodeArrays, " ■ No log on, turned on: " . substr($newUniqueNodeArrays[0], 27, 2) . ":" . substr($newUniqueNodeArrays[0], 30, 2));
+    }
 
     foreach ($newUniqueNodeArrays as $newUniqueNodeArray){
       if ((strpos($newUniqueNodeArray, "Logon") !== FALSE)) {
@@ -66,10 +82,11 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
           // Pushes the first time that a user logs onto a node to new Array
           $sortedNodeFirstLogon = substr($newUniqueNodeArray, 27, 5);
           $sortedNodeFirstLogon = str_replace("_", ":", $sortedNodeFirstLogon);
-          $sortedNodeFirstLogon = "First Logged On: " . $sortedNodeFirstLogon;
+          $sortedNodeFirstLogon = " ■ First Logged On: " . $sortedNodeFirstLogon;
           array_push($sortedNodeArrays, $sortedNodeFirstLogon);
         } 
-      }
+      } 
+      // else if ((strpos($newUniqueNodeArray, "Logon") !== TRUE))
       if ((strpos($newUniqueNodeArray, "Idled") !== FALSE)) {
         $idleCount++;
       }
@@ -77,23 +94,21 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
         $turnedOnCount++;
       }
     }
-    $idleCount = $idleCount * 15;
-    $convertedIdleCount = intdiv($idleCount, 60).':'. ($idleCount % 60);
-    // array_push($sortedNodeArrays, $convertedIdleCount);
 
     // Pushes the total time that a node is turned on to new Array
     $turnedOnCount = $turnedOnCount * 15;
-    $convertedturnedOnCount = "Last turned on: " . intdiv($turnedOnCount, 60).':'. ($turnedOnCount % 60);
+    $convertedturnedOnCount = " ■ Total time turned on: " . intdiv($turnedOnCount, 60).':'. ($turnedOnCount % 60) . " hrs";
     array_push($sortedNodeArrays, $convertedturnedOnCount);
 
     // Pushes the real idle time registered on a new to new Array
-    $realIdleCount = $turnedOnCount - $idleCount;
-    $convertedrealIdleCount = "Total idle time: " . intdiv($realIdleCount, 60).':'. ($realIdleCount % 60);
-    array_push($sortedNodeArrays, $convertedrealIdleCount);
+    $idleCount = $idleCount * 15;
+    $convertedIdleCount = " ■ Total idle time: " . intdiv($idleCount, 60).':'. ($idleCount % 60)  . " hrs";
+    if ($idleCount == 0) { $convertedIdleCount = " ■ Total idle time: none √";}
+    array_push($sortedNodeArrays, $convertedIdleCount);
 
     // Pushes the last registered node activity to new Array
     $lastNodeActivity = substr($newUniqueNodeArray, 36, 8) . ": " . substr($newUniqueNodeArray, 27, 2) . ":" . substr($newUniqueNodeArray, 30, 2);
-    $lastNodeActivity  = str_replace("_", " ", $lastNodeActivity );
+    $lastNodeActivity  = " ■ " . str_replace("_", " ", $lastNodeActivity );
     array_push($sortedNodeArrays, $lastNodeActivity );
 
     $rep = 0;
