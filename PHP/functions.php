@@ -96,7 +96,7 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     }
 
     // Pushes the total time that a node is turned on to new Array
-    $turnedOnCount = ($turnedOnCount - 1 ) * 15; // the minusing here is to compensate for one thing on the OS side
+    $turnedOnCount = $turnedOnCount * 15; // adding a minus one here might compensate for one thing on the OS side, explore this further
     $convertedturnedOnCount = " ■ Total time turned on: " . intdiv($turnedOnCount, 60).':'. ($turnedOnCount % 60) . " hrs";
     array_push($sortedNodeArrays, $convertedturnedOnCount);
 
