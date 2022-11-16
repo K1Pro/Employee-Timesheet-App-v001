@@ -29,6 +29,6 @@
 <?php
   // $directory = realpath('.') . "/nodes/" . substr($date, 0, 7) . "/" . substr($date, 8, 2);
   // listNodeActivity($date, $nodeList, $directory);
-  populateCalendar($date, $nodeList, $weeks);
+  populateCalendar($date, $nodeList, $weeks, $userList);
 ?>
 <div id="CalendarHTMLModule"></div>
