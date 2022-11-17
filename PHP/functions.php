@@ -5,24 +5,35 @@ function listFirstLogonNodeActivity($calendarDate, $nodeList, $userList) {
   $scanned_directory = array_diff(scandir($directory), array('..', '.'));
   $uniqueNodeList =[];
   foreach( $scanned_directory as $logFiles ) {
+    $firstUnderscore = strpos($logFiles, "_", 0) + 1;
+    $secondUnderscore = strpos($logFiles, "_", strpos($logFiles, "_") + 1);
+    //  $thirdUnderscore ----> this is going to be stupid and possibly tough to calculate 
+    $nodeLength = $secondUnderscore - $firstUnderscore;
+    $nodeName = substr($logFiles, $firstUnderscore, $nodeLength);
+    
+    if (!in_array($nodeName, $uniqueNodeList)) {
+      echo $nodeName."</br>";
+      array_push($uniqueNodeList , $nodeName);
+    }
+    
     if (str_contains($logFiles, 'TurnedOn')) {
-      // echo $logFiles . "\n";
-      
-      $secondUnderscore = strpos($logFiles, "_", 2);
-      $thirdUnderscore = strpos($logFiles, "_", 3);
-      $nodeName = $thirdUnderscore - $secondUnderscore;
-      echo '<div class="text-light border-bottom border-white nodeActivity ';
-      foreach( $nodeList as $node) {
-        if (str_contains($logFiles, $node)) {
-          echo $node;
-        }
-      }
-      echo '">' . str_replace("_", "", substr($logFiles, 0, $secondUnderscore));
-      echo '</div>';
-      // if (strpos($logFiles, "_") !== False) {
 
-      // }
+      // echo $logFiles . "\n";
+        //////this was working VVVVVVVVVVVVVVVVV
+  //     $secondUnderscore = strpos($logFiles, "_", 2);
+  //     $thirdUnderscore = strpos($logFiles, "_", 3);
+  //     $nodeName = $thirdUnderscore - $secondUnderscore;
+  //     echo '<div class="text-light border-bottom border-white nodeActivity ';
+  //     foreach( $nodeList as $node) {
+  //       if (str_contains($logFiles, $node)) {
+  //         echo $node;
+  //       }
+  //     }
+  //     echo '">' . str_replace("_", "", substr($logFiles, 0, $secondUnderscore));
+  //     echo '</div>';
   }
+
+  //////this was working ^^^^^^^^^^^^^
 
     // echo $logFiles;
     // $OSAction = substr($logFiles, -12, 8);
