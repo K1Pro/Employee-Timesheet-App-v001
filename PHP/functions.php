@@ -44,7 +44,6 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     //   }
     // }
   }
-  echo "</br>";
   $newUniqueNodeArraysNo = 0;
   $sortedNodeArrays = 0;
   
@@ -77,6 +76,8 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
       $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, $secondUnderscore);
       echo "</br>" . $sortedNodeLabel;
+
+      $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
       $sortedNodeLabel = str_replace("_", "", $sortedNodeLabel);
       $sortedNodeLabel = ucfirst(strtolower(str_replace("-", " ", $sortedNodeLabel))) . ':';
       array_push($sortedNodeArrays, $sortedNodeLabel);
@@ -87,7 +88,7 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       if ((strpos($newUniqueNodeArray, "LoggedOn") !== FALSE)) {
         $rep++;
         if ($rep == 1) {
-          // Pushes the first time that a user logs onto a node to new Array
+          // Pushes the user name from the first time that that user logs onto a node to new Array
           $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
           $sortedNodeLabel = substr($newUniqueNodeArray, 0, $secondUnderscore);
           $sortedNodeLabel = str_replace("_", " ", $sortedNodeLabel) . ':';
