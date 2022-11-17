@@ -51,6 +51,7 @@ a {
   margin-right: -12px;
   padding-right: 12px;
   font-size: 1.55vh;
+  border-radius: 10px !important;
 }
 
 .nodeActivitySidePanel {
@@ -59,16 +60,32 @@ a {
   font-size: 2.75vh;
 }
 
-.BartoszTime {
+.Bartosz {
   background-color: lightseagreen;
 }
-.HannaTime {
+.Hanna {
   background-color: lightcoral;
 }
-.JoannaTime {
+.Joanna {
   background-color: lightsalmon;
 }
 
+.POLAND-DESKTOP1 {
+  background: lightseagreen;
+}
+
+.POLAND-DESKTOP2 {
+  background: lightseagreen;
+}
+
+.OFFICE-DESKTOP1 {
+  background: lightcoral;
+}
+
 .OFFICE-DESKTOP2 {
-  background-color: lightseagreen;
+  background: #9966cc;
+}
+
+.POLAND-LAPTOP1 {
+  background: lightsalmon;
 }

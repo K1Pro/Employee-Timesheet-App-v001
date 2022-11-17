@@ -12,7 +12,9 @@ function listFirstLogonNodeActivity($calendarDate, $nodeList, $userList) {
     $nodeName = substr($logFiles, $firstUnderscore, $nodeLength);
     
     if (!in_array($nodeName, $uniqueNodeList)) {
-      echo $nodeName."</br>";
+      echo '<div class="text-light border-bottom border-white nodeActivity ' . $nodeName . '">';
+      echo $nodeName;
+      echo '</div>';
       array_push($uniqueNodeList , $nodeName);
     }
     
