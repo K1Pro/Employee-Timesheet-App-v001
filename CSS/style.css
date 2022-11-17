@@ -60,32 +60,37 @@ a {
   font-size: 2.75vh;
 }
 
+/* Users */
 .Bartosz {
-  background-color: lightseagreen;
+  background-color: #009999;
 }
 .Hanna {
-  background-color: lightcoral;
+  background-color: #cc3333;
 }
 .Joanna {
-  background-color: lightsalmon;
+  background-color: #cc6633;
+}
+.Staff {
+  background-color: #9933cc;
 }
 
+/* Nodes  */
 .POLAND-DESKTOP1 {
-  background: lightseagreen;
+  background: #009999;
 }
 
 .POLAND-DESKTOP2 {
-  background: lightseagreen;
+  background: #009999;
 }
 
 .OFFICE-DESKTOP1 {
-  background: lightcoral;
+  background: #cc3333;
 }
 
 .OFFICE-DESKTOP2 {
-  background: #9966cc;
+  background: #9933cc;
 }
 
 .POLAND-LAPTOP1 {
-  background: lightsalmon;
+  background: #cc6633;
 }

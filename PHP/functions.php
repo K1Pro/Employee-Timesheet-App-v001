@@ -1,5 +1,6 @@
 <?php
 
+// Shows first node activity inside calendar days
 function listFirstLogonNodeActivity($calendarDate, $nodeList, $userList) {
   $directory = realpath('.') . "/nodes/" . date("Y-m/d", $calendarDate);
   $scanned_directory = array_diff(scandir($directory), array('..', '.'));
@@ -7,76 +8,52 @@ function listFirstLogonNodeActivity($calendarDate, $nodeList, $userList) {
   foreach( $scanned_directory as $logFiles ) {
     $firstUnderscore = strpos($logFiles, "_", 0) + 1;
     $secondUnderscore = strpos($logFiles, "_", strpos($logFiles, "_") + 1);
-    //  $thirdUnderscore ----> this is going to be stupid and possibly tough to calculate 
     $nodeLength = $secondUnderscore - $firstUnderscore;
     $nodeName = substr($logFiles, $firstUnderscore, $nodeLength);
-    
     if (!in_array($nodeName, $uniqueNodeList)) {
       echo '<div class="text-light border-bottom border-white nodeActivity ' . $nodeName . '">';
-      echo $nodeName;
+      echo str_replace("-", ":", substr($logFiles, $secondUnderscore + 1, 5)) . " " . ucfirst(strtolower($nodeName));
       echo '</div>';
       array_push($uniqueNodeList , $nodeName);
     }
-    
-    if (str_contains($logFiles, 'TurnedOn')) {
-
-      // echo $logFiles . "\n";
-        //////this was working VVVVVVVVVVVVVVVVV
-  //     $secondUnderscore = strpos($logFiles, "_", 2);
-  //     $thirdUnderscore = strpos($logFiles, "_", 3);
-  //     $nodeName = $thirdUnderscore - $secondUnderscore;
-  //     echo '<div class="text-light border-bottom border-white nodeActivity ';
-  //     foreach( $nodeList as $node) {
-  //       if (str_contains($logFiles, $node)) {
-  //         echo $node;
-  //       }
-  //     }
-  //     echo '">' . str_replace("_", "", substr($logFiles, 0, $secondUnderscore));
-  //     echo '</div>';
-  }
-
-  //////this was working ^^^^^^^^^^^^^
-
-    // echo $logFiles;
-    // $OSAction = substr($logFiles, -12, 8);
-    // $scannedNode = substr($logFiles, 0, 26);
-    // if (in_array($scannedNode, $nodeList) && !in_array($scannedNode, $uniqueNodeList)) {
-    //   if ($OSAction == "Logon_at") {
-    //       $timeOfScannedNode = substr($logFiles, 27, 5);
-    //       echo '<div class="text-light border-bottom border-white nodeActivity ';
-    //         if (substr($scannedNode, 0, 8) == "Bartosz_") {echo 'BartoszTime';}
-    //         if (substr($scannedNode, 0, 8) == "Hanna___") {echo 'HannaTime';}
-    //         if (substr($scannedNode, 0, 8) == "Joanna__") {echo 'JoannaTime';}
-    //       echo '">' . str_replace("_", ":", $timeOfScannedNode) . ' ';
-    //       echo str_replace("_", "", substr($scannedNode, 9, 17)) . '</div>' . "\n";
-    //       if(!in_array($scannedNode, $uniqueNodeList , true)){
-    //         array_push($uniqueNodeList , $scannedNode);
-    //     }
-    //     }
-    //   }
   }
 }
+
 // Side Panel
 function listAllNodeActivity($sidePanelDate, $nodeList) {
   $directory = realpath('.') . "/nodes/" . $sidePanelDate;
   $scanned_directory = array_diff(scandir($directory), array('..', '.'));
   $uniqueNodeList =[];
   foreach( $scanned_directory as $logFiles ) {
-    $OSAction = substr($logFiles, -12, 8);
-    $scannedNode = substr($logFiles, 0, 26);
-    if (in_array($scannedNode, $nodeList) && !in_array($scannedNode, $uniqueNodeList)) {
-      if(!in_array($scannedNode, $uniqueNodeList , true)){
+    $firstUnderscore = strpos($logFiles, "_", 0);
+    $secondUnderscore = strpos($logFiles, "_", strpos($logFiles, "_") + 1);
+    $lastUnderscore = strripos($logFiles, "_");
+    $nodeLength = $secondUnderscore - $firstUnderscore;
+    $OSAction = substr($logFiles, $lastUnderscore + 1, 8); // I don't think this is being used anywhere, check this later
+    $scannedNode = substr($logFiles, 0, $secondUnderscore);
+    if (!in_array($scannedNode, $uniqueNodeList)) {
+      if ($firstUnderscore !== 0) {
+        // This gives us a list of unique nodes that have indeed logged on
         array_push($uniqueNodeList , $scannedNode);
       }
     }
+    // if (!in_array($scannedNode, $uniqueNodeList)) {
+    //   if(!in_array($scannedNode, $uniqueNodeList , true)){
+    //     // echo "</br>" . $scannedNode;
+    //     array_push($uniqueNodeList , $scannedNode);
+    //   }
+    // }
   }
-  $newUniqueNodeArrays = 0;
+  echo "</br>";
+  $newUniqueNodeArraysNo = 0;
   $sortedNodeArrays = 0;
   
   foreach ($uniqueNodeList as $uniqueNode){
-    $newUniqueNodeArrays++;
+    // echo "</br>" . $uniqueNode;
+    //////////////////Check these four lines beneath very closely, it caused a serious bug in the side panel
+    $newUniqueNodeArraysNo++;
     $newUniqueNodeArrays = [];
-    $sortedNodeArrays++;
+    $sortedNodeArraysNo++;
     $sortedNodeArrays = [];
     foreach( $scanned_directory as $logFilesTwo ) {
       if (strpos($logFilesTwo, $uniqueNode) !== FALSE) {
@@ -91,40 +68,43 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     $shortNewUniqueNodeArray = [];
     // echo $newUniqueNodeArrays[$newUniqueNodeArraysCount];
     foreach ($newUniqueNodeArrays as $shortNewUniqueNode){
-      $shortNewUniqueNode = substr($shortNewUniqueNode, 36, 8);
+      $lastUnderscore = strripos($shortNewUniqueNode, "_");
+      $shortNewUniqueNode = substr($shortNewUniqueNode, $lastUnderscore + 1, 8);
       array_push($shortNewUniqueNodeArray, $shortNewUniqueNode);
     }
-    if(in_array("Logon_at", $shortNewUniqueNodeArray)){} else {
+    if(in_array("LoggedOn", $shortNewUniqueNodeArray)){} else {
       // If noone has logged onto the node this is first stated in new Array
-      $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, 26);
+      $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
+      $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, $secondUnderscore);
+      echo "</br>" . $sortedNodeLabel;
       $sortedNodeLabel = str_replace("_", "", $sortedNodeLabel);
-      $sortedNodeLabel = str_replace("-", " ", $sortedNodeLabel) . ':';
+      $sortedNodeLabel = ucfirst(strtolower(str_replace("-", " ", $sortedNodeLabel))) . ':';
       array_push($sortedNodeArrays, $sortedNodeLabel);
       array_push($sortedNodeArrays, " ■ No log on, turned on: " . substr($newUniqueNodeArrays[0], 27, 2) . ":" . substr($newUniqueNodeArrays[0], 30, 2));
     }
 
     foreach ($newUniqueNodeArrays as $newUniqueNodeArray){
-      if ((strpos($newUniqueNodeArray, "Logon") !== FALSE)) {
+      if ((strpos($newUniqueNodeArray, "LoggedOn") !== FALSE)) {
         $rep++;
         if ($rep == 1) {
           // Pushes the first time that a user logs onto a node to new Array
-          $sortedNodeLabel = substr($newUniqueNodeArray, 0, 26);
-          $sortedNodeLabel = str_replace("_", "", $sortedNodeLabel);
-          $sortedNodeLabel = str_replace("-", " ", $sortedNodeLabel) . ':';
+          $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
+          $sortedNodeLabel = substr($newUniqueNodeArray, 0, $secondUnderscore);
+          $sortedNodeLabel = str_replace("_", " ", $sortedNodeLabel) . ':';
           array_push($sortedNodeArrays, $sortedNodeLabel);
 
           // Pushes the first time that a user logs onto a node to new Array
-          $sortedNodeFirstLogon = substr($newUniqueNodeArray, 27, 5);
-          $sortedNodeFirstLogon = str_replace("_", ":", $sortedNodeFirstLogon);
+          $sortedNodeFirstLogon = substr($newUniqueNodeArray, $secondUnderscore + 1, 5);
+          $sortedNodeFirstLogon = str_replace("-", ":", $sortedNodeFirstLogon);
           $sortedNodeFirstLogon = " ■ First Logged On: " . $sortedNodeFirstLogon;
           array_push($sortedNodeArrays, $sortedNodeFirstLogon);
         } 
       } 
       // else if ((strpos($newUniqueNodeArray, "Logon") !== TRUE))
-      if ((strpos($newUniqueNodeArray, "Idled") !== FALSE)) {
+      if ((strpos($newUniqueNodeArray, "Idle-Yes") !== FALSE)) {
         $idleCount++;
       }
-      if ((strpos($newUniqueNodeArray, "TurnedOn") !== FALSE)) {
+      if ((strpos($newUniqueNodeArray, "LogInYes") !== FALSE)) {
         $turnedOnCount++;
       }
     }
@@ -141,7 +121,9 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     array_push($sortedNodeArrays, $convertedIdleCount);
 
     // Pushes the last registered node activity to new Array
-    $lastNodeActivity = substr($newUniqueNodeArray, 36, 8) . ": " . substr($newUniqueNodeArray, 27, 2) . ":" . substr($newUniqueNodeArray, 30, 2);
+    $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
+    $lastUnderscore = strripos($newUniqueNodeArray, "_");
+    $lastNodeActivity = substr($newUniqueNodeArray, $lastUnderscore, 9) . ": " . substr($newUniqueNodeArray, $secondUnderscore + 1, 2) . ":" . substr($newUniqueNodeArray, $secondUnderscore + 4, 2);
     $lastNodeActivity  = " ■ " . str_replace("_", " ", $lastNodeActivity );
     array_push($sortedNodeArrays, $lastNodeActivity );
 
@@ -150,9 +132,10 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       $rep++;
       if ($rep == 1) {
         echo '<div class="text-light border-bottom border-white nodeActivitySidePanel ';
-        if (substr($sortedNodeArray, 0, 7) == "Bartosz") {echo 'BartoszTime';}
-        if (substr($sortedNodeArray, 0, 5) == "Hanna") {echo 'HannaTime';}
-        if (substr($sortedNodeArray, 0, 6) == "Joanna") {echo 'JoannaTime';}
+        if (substr($sortedNodeArray, 0, 7) == "Bartosz") {echo 'Bartosz';}
+        if (substr($sortedNodeArray, 0, 5) == "Hanna") {echo 'Hanna';}
+        if (substr($sortedNodeArray, 0, 6) == "Joanna") {echo 'Joanna';}
+        if (substr($sortedNodeArray, 0, 5) == "Staff") {echo 'Staff';}
         echo '">';
       }
       echo $sortedNodeArray . "</br>";
