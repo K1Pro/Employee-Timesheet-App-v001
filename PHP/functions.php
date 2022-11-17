@@ -44,15 +44,16 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     //   }
     // }
   }
-  $newUniqueNodeArraysNo = 0;
-  $sortedNodeArrays = 0;
+  // probably can delete this  VVVV check
+  // $newUniqueNodeArrays = 0;
+  // $sortedNodeArrays = 0;
   
   foreach ($uniqueNodeList as $uniqueNode){
     // echo "</br>" . $uniqueNode;
     //////////////////Check these four lines beneath very closely, it caused a serious bug in the side panel
-    $newUniqueNodeArraysNo++;
+    // $newUniqueNodeArraysNo++;
     $newUniqueNodeArrays = [];
-    $sortedNodeArraysNo++;
+    // $sortedNodeArraysNo++;
     $sortedNodeArrays = [];
     foreach( $scanned_directory as $logFilesTwo ) {
       if (strpos($logFilesTwo, $uniqueNode) !== FALSE) {
@@ -69,19 +70,17 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     foreach ($newUniqueNodeArrays as $shortNewUniqueNode){
       $lastUnderscore = strripos($shortNewUniqueNode, "_");
       $shortNewUniqueNode = substr($shortNewUniqueNode, $lastUnderscore + 1, 8);
+      // echo "</br>" . $shortNewUniqueNode;
       array_push($shortNewUniqueNodeArray, $shortNewUniqueNode);
     }
+
     if(in_array("LoggedOn", $shortNewUniqueNodeArray)){} else {
       // If noone has logged onto the node this is first stated in new Array
-      $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
+      $secondUnderscore = strpos($newUniqueNodeArrays[0], "_", strpos($newUniqueNodeArrays[0], "_") + 1);
       $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, $secondUnderscore);
-      echo "</br>" . $sortedNodeLabel;
-
-      $secondUnderscore = strpos($newUniqueNodeArray, "_", strpos($newUniqueNodeArray, "_") + 1);
-      $sortedNodeLabel = str_replace("_", "", $sortedNodeLabel);
-      $sortedNodeLabel = ucfirst(strtolower(str_replace("-", " ", $sortedNodeLabel))) . ':';
+      $sortedNodeLabel = str_replace("_", " ", $sortedNodeLabel) . ':';
       array_push($sortedNodeArrays, $sortedNodeLabel);
-      array_push($sortedNodeArrays, " ■ No log on, turned on: " . substr($newUniqueNodeArrays[0], 27, 2) . ":" . substr($newUniqueNodeArrays[0], 30, 2));
+      array_push($sortedNodeArrays, " ■ No log on, turned on: " . substr($newUniqueNodeArrays[0], $secondUnderscore + 1, 2) . ":" . substr($newUniqueNodeArrays[0], $secondUnderscore + 4, 2));
     }
 
     foreach ($newUniqueNodeArrays as $newUniqueNodeArray){
@@ -112,7 +111,7 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
 
     // Pushes the total time that a node is turned on to new Array
     $turnedOnCount = $turnedOnCount * 15; // adding a minus one here might compensate for one thing on the OS side, explore this further
-    $convertedturnedOnCount = " ■ Total time turned on: " . intdiv($turnedOnCount, 60).':'. ($turnedOnCount % 60) . " hrs";
+    $convertedturnedOnCount = " ■ Total time logged on: " . intdiv($turnedOnCount, 60).':'. ($turnedOnCount % 60) . " hrs";
     array_push($sortedNodeArrays, $convertedturnedOnCount);
 
     // Pushes the real idle time registered on a new to new Array
