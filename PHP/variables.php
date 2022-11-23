@@ -16,7 +16,8 @@ $nodeList = [
   "node2" => "POLAND-DESKTOP2",
   "node3" => "OFFICE-DESKTOP1",
   "node4" => "OFFICE-DESKTOP2",
-  "node5" => "POLAND-LAPTOP1",
+  "node5" => "OFFICE-LAPTOP1",
+  "node6" => "POLAND-LAPTOP1",
 ];
 
 // List of all monitored work computers: String Length has to equal 26
