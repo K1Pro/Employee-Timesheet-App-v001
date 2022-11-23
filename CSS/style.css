@@ -62,39 +62,39 @@ a {
 
 /* Users */
 .Bartosz {
-  background-color: #009999;
+  background-color: #6699ff;
 }
 .Hanna {
-  background-color: #cc3333;
+  background-color: #ff9933;
 }
 .Joanna {
-  background-color: #cc6633;
+  background-color: #ff66cc;
 }
 .Staff {
-  background-color: #9933cc;
+  background-color: #9966cc;
 }
 
 /* Nodes  */
 .POLAND-DESKTOP1 {
-  background: #009999;
+  background: #6699ff;
 }
 
 .POLAND-DESKTOP2 {
-  background: #009999;
+  background: #6699ff;
 }
 
 .OFFICE-DESKTOP1 {
-  background: #cc3333;
+  background: #ff9933;
 }
 
 .OFFICE-DESKTOP2 {
-  background: #9933cc;
+  background: #9966cc;
 }
 
 .POLAND-LAPTOP1 {
-  background: #cc6633;
+  background: #ff66cc;
 }
 
 .OFFICE-LAPTOP1 {
-  background: #9933cc;
+  background: #9966cc;
 }
