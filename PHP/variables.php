@@ -22,9 +22,9 @@ $nodeList = [
 
 // List of all monitored work computers: String Length has to equal 26
 $userList = [
-  "user1" => "Hanna",
-  "user2" => "Bartosz",
-  "user3" => "Joanna",
-  "user4" => "Staff",
+  "user1" => "hanna",
+  "user2" => "bartosz",
+  "user3" => "joanna",
+  "user4" => "staff",
 ];
 ?>

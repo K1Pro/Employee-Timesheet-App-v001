@@ -132,10 +132,10 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       $rep++;
       if ($rep == 1) {
         echo '<div class="text-light border-bottom border-white nodeActivitySidePanel ';
-        if (substr($sortedNodeArray, 0, 7) == "Bartosz") {echo 'Bartosz';}
-        if (substr($sortedNodeArray, 0, 5) == "Hanna") {echo 'Hanna';}
-        if (substr($sortedNodeArray, 0, 6) == "Joanna") {echo 'Joanna';}
-        if (substr($sortedNodeArray, 0, 5) == "Staff") {echo 'Staff';}
+        if (substr($sortedNodeArray, 0, 7) == "bartosz") {echo 'bartosz';}
+        if (substr($sortedNodeArray, 0, 5) == "hanna") {echo 'hanna';}
+        if (substr($sortedNodeArray, 0, 6) == "joanna") {echo 'joanna';}
+        if (substr($sortedNodeArray, 0, 5) == "staff") {echo 'staff';}
         echo '">';
       }
       echo $sortedNodeArray . "</br>";
