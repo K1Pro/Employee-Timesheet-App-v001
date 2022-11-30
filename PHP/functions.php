@@ -74,7 +74,7 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
       array_push($shortNewUniqueNodeArray, $shortNewUniqueNode);
     }
 
-    if(in_array("LoggedOn", $shortNewUniqueNodeArray)){} else {
+    if(in_array("LoggedOn", $shortNewUniqueNodeArray) || in_array("Unlocked", $shortNewUniqueNodeArray)){} else {
       // If noone has logged onto the node this is first stated in new Array
       $secondUnderscore = strpos($newUniqueNodeArrays[0], "_", strpos($newUniqueNodeArrays[0], "_") + 1);
       $sortedNodeLabel = substr($newUniqueNodeArrays[0], 0, $secondUnderscore);
@@ -84,7 +84,7 @@ function listAllNodeActivity($sidePanelDate, $nodeList) {
     }
 
     foreach ($newUniqueNodeArrays as $newUniqueNodeArray){
-      if ((strpos($newUniqueNodeArray, "LoggedOn") !== FALSE)) {
+      if ((strpos($newUniqueNodeArray, "LoggedOn") !== FALSE) || in_array("Unlocked", $shortNewUniqueNodeArray)) {
         $rep++;
         if ($rep == 1) {
           // Pushes the user name from the first time that that user logs onto a node to new Array
