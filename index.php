@@ -36,7 +36,7 @@
         </div>
 
         <!-- Side Panel Section -->
-        <div class="col-12 col-md-3 bg-dark text-light bartkaFullColumn" style="padding: 10px; --bs-bg-opacity: 0.65; overflow-y: scroll">
+        <div class="col-12 col-md-3 bg-dark text-light bartkaFullColumn" style="padding: 10px; --bs-bg-opacity: 0.5; overflow-y: scroll">
           <?php include './PHP/SidePanel.php';?>
         </div>
       </div>

@@ -2,7 +2,7 @@
 <div
   id="calendarHeader"
   class="row calendarHeaderRow bg-dark responsiveHeaderFont"
-  style="--bs-bg-opacity: 0.65"
+  style="--bs-bg-opacity: 0.5"
 >
   <div id="LastMonthButton" class="col-1">
     <?php echo "\n" . '<a href="?date='.date("Y-m-d").'&weeks='.($weeks - 4).'"><img src="images/FastBackwardWhite.png" alt="Last-Month" /></a>'; ?>
