@@ -157,7 +157,7 @@ function listDateHeaders($date, $calendarDay, $calendarDate) {
 
 function populateCalendar($date, $nodeList, $weeks, $userList){
   // here is a slight bug when it is a Sunday
-  $dayOfTheWeekNo = date('w') - 0;
+  $dayOfTheWeekNo = date('w') - 1;
   $dayOfTheWeek = 1;
   $calendarDay = 0;
   do {
